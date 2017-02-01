@@ -1,0 +1,12 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="opencldotnet\MyClass.cs">
+    <Files>
+      <File FileName="opencldotnet\MyClass.cs" Line="4" Column="17" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+</Properties>
