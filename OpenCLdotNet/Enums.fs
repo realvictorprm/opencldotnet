@@ -1,0 +1,525 @@
+﻿namespace OpenCL
+
+
+type Success =
+    | SUCCESS = 0
+    | DEVICE_NOT_FOUND = -1
+    | DEVICE_NOT_AVAILABLE  = -2
+    | COMPILER_NOT_AVAILABLE  = -3
+    | MEM_OBJECT_ALLOCATION_FAILURE = -4
+    | OUT_OF_RESOURCES  = -5
+    | OUT_OF_HOST_MEMORY  = -6
+    | PROFILING_INFO_NOT_AVAILABLE  = -7
+    | MEM_COPY_OVERLAP  = -8
+    | IMAGE_FORMAT_MISMATCH = -9
+    | IMAGE_FORMAT_NOT_SUPPORTED  = -10
+    | BUILD_PROGRAM_FAILURE = -11
+    | MAP_FAILURE = -12
+    | MISALIGNED_SUB_BUFFER_OFFSET  = -13
+    | EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST  = -14
+    | COMPILE_PROGRAM_FAILURE = -15
+    | LINKER_NOT_AVAILABLE  = -16
+    | LINK_PROGRAM_FAILURE  = -17
+    | DEVICE_PARTITION_FAILED = -18
+    | KERNEL_ARG_INFO_NOT_AVAILABLE = -19
+
+    | INVALID_VALUE = -30
+    | INVALID_DEVICE_TYPE = -31
+    | INVALID_PLATFORM  = -32
+    | INVALID_DEVICE  = -33
+    | INVALID_CONTEXT = -34
+    | INVALID_QUEUE_PROPERTIES  = -35
+    | INVALID_COMMAND_QUEUE = -36
+    | INVALID_HOST_PTR  = -37
+    | INVALID_MEM_OBJECT  = -38
+    | INVALID_IMAGE_FORMAT_DESCRIPTOR = -39
+    | INVALID_IMAGE_SIZE  = -40
+    | INVALID_SAMPLER = -41
+    | INVALID_BINARY  = -42
+    | INVALID_BUILD_OPTIONS = -43
+    | INVALID_PROGRAM = -44
+    | INVALID_PROGRAM_EXECUTABLE  = -45
+    | INVALID_KERNEL_NAME = -46
+    | INVALID_KERNEL_DEFINITION = -47
+    | INVALID_KERNEL  = -48
+    | INVALID_ARG_INDEX = -49
+    | INVALID_ARG_VALUE = -50
+    | INVALID_ARG_SIZE  = -51
+    | INVALID_KERNEL_ARGS = -52
+    | INVALID_WORK_DIMENSION  = -53
+    | INVALID_WORK_GROUP_SIZE = -54
+    | INVALID_WORK_ITEM_SIZE  = -55
+    | INVALID_GLOBAL_OFFSET = -56
+    | INVALID_EVENT_WAIT_LIST = -57
+    | INVALID_EVENT = -58
+    | INVALID_OPERATION = -59
+    | INVALID_GL_OBJECT = -60
+    | INVALID_BUFFER_SIZE = -61
+    | INVALID_MIP_LEVEL = -62
+    | INVALID_GLOBAL_WORK_SIZE  = -63
+    | INVALID_PROPERTY  = -64
+    | INVALID_IMAGE_DESCRIPTOR  = -65
+    | INVALID_COMPILER_OPTIONS  = -66
+    | INVALID_LINKER_OPTIONS  = -67
+    | INVALID_DEVICE_PARTITION_COUNT  = -68
+    | INVALID_PIPE_SIZE = -69
+    | INVALID_DEVICE_QUEUE  = -70
+
+type Version =
+    | VERSION_1_0 = 1
+    | VERSION_1_1 = 1
+    | VERSION_1_2 = 1
+    | VERSION_2_0 = 1
+    | VERSION_2_1 = 1
+
+type Bool =
+    | FALSE = 0
+    | TRUE = 1
+    | BLOCKING = 0
+    | NON_BLOCKING = 1
+
+type PlatformInfo = 
+    | PROFILE                         = 0x0900
+    | VERSION                         = 0x0901
+    | NAME                            = 0x0902
+    | VENDOR                          = 0x0903
+    | EXTENSIONS                      = 0x0904
+    | HOST_TIMER_RESOLUTION           = 0x0905
+
+type DeviceType = 
+    | DEFAULT                      = 1
+    | CPU                          = 2
+    | GPU                          = 4
+    | ACCELERATOR                  = 8
+    | CUSTOM                       = 16
+    | ALL                          = 0xFFFFFFFF
+
+type DeviceInfo =
+    | TYPE                                   = 0x1000
+    | VENDOR_ID                              = 0x1001
+    | MAX_COMPUTE_UNITS                      = 0x1002
+    | MAX_WORK_ITEM_DIMENSIONS               = 0x1003
+    | MAX_WORK_GROUP_SIZE                    = 0x1004
+    | MAX_WORK_ITEM_SIZES                    = 0x1005
+    | PREFERRED_VECTOR_WIDTH_CHAR            = 0x1006
+    | PREFERRED_VECTOR_WIDTH_SHORT           = 0x1007
+    | PREFERRED_VECTOR_WIDTH_INT             = 0x1008
+    | PREFERRED_VECTOR_WIDTH_LONG            = 0x1009
+    | PREFERRED_VECTOR_WIDTH_FLOAT           = 0x100A
+    | PREFERRED_VECTOR_WIDTH_DOUBLE          = 0x100B
+    | MAX_CLOCK_FREQUENCY                    = 0x100C
+    | ADDRESS_BITS                           = 0x100D
+    | MAX_READ_IMAGE_ARGS                    = 0x100E
+    | MAX_WRITE_IMAGE_ARGS                   = 0x100F
+    | MAX_MEM_ALLOC_SIZE                     = 0x1010
+    | IMAGE2D_MAX_WIDTH                      = 0x1011
+    | IMAGE2D_MAX_HEIGHT                     = 0x1012
+    | IMAGE3D_MAX_WIDTH                      = 0x1013
+    | IMAGE3D_MAX_HEIGHT                     = 0x1014
+    | IMAGE3D_MAX_DEPTH                      = 0x1015
+    | IMAGE_SUPPORT                          = 0x1016
+    | MAX_PARAMETER_SIZE                     = 0x1017
+    | MAX_SAMPLERS                           = 0x1018
+    | MEM_BASE_ADDR_ALIGN                    = 0x1019
+    | MIN_DATA_TYPE_ALIGN_SIZE               = 0x101A
+    | SINGLE_FP_CONFIG                       = 0x101B
+    | GLOBAL_MEM_CACHE_TYPE                  = 0x101C
+    | GLOBAL_MEM_CACHELINE_SIZE              = 0x101D
+    | GLOBAL_MEM_CACHE_SIZE                  = 0x101E
+    | GLOBAL_MEM_SIZE                        = 0x101F
+    | MAX_CONSTANT_BUFFER_SIZE               = 0x1020
+    | MAX_CONSTANT_ARGS                      = 0x1021
+    | LOCAL_MEM_TYPE                         = 0x1022
+    | LOCAL_MEM_SIZE                         = 0x1023
+    | ERROR_CORRECTION_SUPPORT               = 0x1024
+    | PROFILING_TIMER_RESOLUTION             = 0x1025
+    | ENDIAN_LITTLE                          = 0x1026
+    | AVAILABLE                              = 0x1027
+    | COMPILER_AVAILABLE                     = 0x1028
+    | EXECUTION_CAPABILITIES                 = 0x1029
+    | QUEUE_PROPERTIES                       = 0x102A  //deprecated
+    | QUEUE_ON_HOST_PROPERTIES               = 0x102A
+    | NAME                                   = 0x102B
+    | VENDOR                                 = 0x102C
+    | DRIVER_VERSION                         = 0x102D
+    | PROFILE                                = 0x102E
+    | VERSION                                = 0x102F
+    | EXTENSIONS                             = 0x1030
+    | PLATFORM                               = 0x1031
+    | DOUBLE_FP_CONFIG                       = 0x1032
+    | HALF_FP_CONFIG                         = 0x1033
+    | PREFERRED_VECTOR_WIDTH_HALF            = 0x1034
+    | HOST_UNIFIED_MEMORY                    = 0x1035   // deprecated 
+    | NATIVE_VECTOR_WIDTH_CHAR               = 0x1036
+    | NATIVE_VECTOR_WIDTH_SHORT              = 0x1037
+    | NATIVE_VECTOR_WIDTH_INT                = 0x1038
+    | NATIVE_VECTOR_WIDTH_LONG               = 0x1039
+    | NATIVE_VECTOR_WIDTH_FLOAT              = 0x103A
+    | NATIVE_VECTOR_WIDTH_DOUBLE             = 0x103B
+    | NATIVE_VECTOR_WIDTH_HALF               = 0x103C
+    | OPENCL_C_VERSION                       = 0x103D
+    | LINKER_AVAILABLE                       = 0x103E
+    | BUILT_IN_KERNELS                       = 0x103F
+    | IMAGE_MAX_BUFFER_SIZE                  = 0x1040
+    | IMAGE_MAX_ARRAY_SIZE                   = 0x1041
+    | PARENT_DEVICE                          = 0x1042
+    | PARTITION_MAX_SUB_DEVICES              = 0x1043
+    | PARTITION_PROPERTIES                   = 0x1044
+    | PARTITION_AFFINITY_DOMAIN              = 0x1045
+    | PARTITION_TYPE                         = 0x1046
+    | REFERENCE_COUNT                        = 0x1047
+    | PREFERRED_INTEROP_USER_SYNC            = 0x1048
+    | PRINTF_BUFFER_SIZE                     = 0x1049
+    | IMAGE_PITCH_ALIGNMENT                  = 0x104A
+    | IMAGE_BASE_ADDRESS_ALIGNMENT           = 0x104B
+    | MAX_READ_WRITE_IMAGE_ARGS              = 0x104C
+    | MAX_GLOBAL_VARIABLE_SIZE               = 0x104D
+    | QUEUE_ON_DEVICE_PROPERTIES             = 0x104E
+    | QUEUE_ON_DEVICE_PREFERRED_SIZE         = 0x104F
+    | QUEUE_ON_DEVICE_MAX_SIZE               = 0x1050
+    | MAX_ON_DEVICE_QUEUES                   = 0x1051
+    | MAX_ON_DEVICE_EVENTS                   = 0x1052
+    | SVM_CAPABILITIES                       = 0x1053
+    | GLOBAL_VARIABLE_PREFERRED_TOTAL_SIZE   = 0x1054
+    | MAX_PIPE_ARGS                          = 0x1055
+    | PIPE_MAX_ACTIVE_RESERVATIONS           = 0x1056
+    | PIPE_MAX_PACKET_SIZE                   = 0x1057
+    | PREFERRED_PLATFORM_ATOMIC_ALIGNMENT    = 0x1058
+    | PREFERRED_GLOBAL_ATOMIC_ALIGNMENT      = 0x1059
+    | PREFERRED_LOCAL_ATOMIC_ALIGNMENT       = 0x105A
+    | IL_VERSION                             = 0x105B
+    | MAX_NUM_SUB_GROUPS                     = 0x105C
+    | SUB_GROUP_INDEPENDENT_FORWARD_PROGRESS = 0x105D
+
+
+
+type DeviceFP_Config =
+    | DENORM                                = 1
+    | INF_NAN                               = 2
+    | ROUND_TO_NEAREST                      = 4
+    | ROUND_TO_ZERO                         = 8
+    | ROUND_TO_INF                          = 16
+    | FMA                                   = 32
+    | SOFT_FLOAT                            = 64
+    | CORRECTLY_ROUNDED_DIVIDE_SQRT         = 128
+
+type DeviceMemCacheType =
+    | NONE                                     = 0x0
+    | READ_ONLY_CACHE                          = 0x1
+    | READ_WRITE_CACHE                         = 0x2
+
+type DeviceLocalMemType =
+    | LOCAL                                    = 0x1
+    | GLOBAL                                   = 0x2
+    
+type DeviceExecCapabilities =
+    | EXEC_KERNEL                              = 1
+    | EXEC_NATIVE_KERNEL                       = 2
+    
+type CommandQueueProperties = 
+    | OUT_OF_ORDER_EXEC_MODE_ENABLE      = 1
+    | PROFILING_ENABLE                   = 2
+    | ON_DEVICE                          = 4
+    | ON_DEVICE_DEFAULT                  = 8
+    
+type ContextInfo =
+    | REFERENCE_COUNT                  = 0x1080
+    | DEVICES                          = 0x1081
+    | PROPERTIES                       = 0x1082
+    | NUM_DEVICES                      = 0x1083
+    
+type ContextProperties =
+    | PLATFORM                         = 0x1084
+    | INTEROP_USER_SYNC                = 0x1085
+    
+type DevicePartitionProperty =
+    | EQUALLY                 = 0x1086
+    | BY_COUNTS               = 0x1087
+    | BY_COUNTS_LIST_END      = 0x0
+    | BY_AFFINITY_DOMAIN      = 0x1088
+    
+type DeviceAffinityDomain =
+    | NUMA               = 1
+    | L4_CACHE           = 2
+    | L3_CACHE           = 4
+    | L2_CACHE           = 8
+    | L1_CACHE           = 16
+    | NEXT_PARTITIONABLE = 32
+    
+type DeviceSVMCapabilities =
+    | COARSE_GRAIN_BUFFER           = 1
+    | FINE_GRAIN_BUFFER             = 2
+    | FINE_GRAIN_SYSTEM             = 4
+    | ATOMICS                       = 8
+    
+type CommandQueueInfo =
+    | CONTEXT                            = 0x1090
+    | DEVICE                             = 0x1091
+    | REFERENCE_COUNT                    = 0x1092
+    | PROPERTIES                         = 0x1093
+    | SIZE                               = 0x1094
+    | DEVICE_DEFAULT                     = 0x1095
+    
+type MemFlags = 
+    | READ_WRITE                           = 1
+    | WRITE_ONLY                           = 2
+    | READ_ONLY                            = 4
+    | USE_HOST_PTR                         = 8
+    | ALLOC_HOST_PTR                       = 16
+    | COPY_HOST_PTR                        = 32
+    //* reserved                                         = 64    */
+    | HOST_WRITE_ONLY                      = 128
+    | HOST_READ_ONLY                       = 256
+    | HOST_NO_ACCESS                       = 512
+    | SVM_FINE_GRAIN_BUFFER                = 1024   // used by cl_svm_flags only */
+    | SVM_ATOMICS                          = 2048   // used by cl_svm_flags only */
+    | KERNEL_READ_AND_WRITE                = 4096
+
+type MemMigrationFlags =
+    | HOST                  = 1
+    | CONTENT_UNDEFINED     = 2
+
+type ChannelOrder =
+    | R                                        = 0x10B0
+    | A                                        = 0x10B1
+    | RG                                       = 0x10B2
+    | RA                                       = 0x10B3
+    | RGB                                      = 0x10B4
+    | RGBA                                     = 0x10B5
+    | BGRA                                     = 0x10B6
+    | ARGB                                     = 0x10B7
+    | INTENSITY                                = 0x10B8
+    | LUMINANCE                                = 0x10B9
+    | Rx                                       = 0x10BA
+    | RGx                                      = 0x10BB
+    | RGBx                                     = 0x10BC
+    | DEPTH                                    = 0x10BD
+    | DEPTH_STENCIL                            = 0x10BE
+    | sRGB                                     = 0x10BF
+    | sRGBx                                    = 0x10C0
+    | sRGBA                                    = 0x10C1
+    | sBGRA                                    = 0x10C2
+    | ABGR                                     = 0x10C3
+    
+type ChannelType =
+    | SNORM_INT8                               = 0x10D0
+    | SNORM_INT16                              = 0x10D1
+    | UNORM_INT8                               = 0x10D2
+    | UNORM_INT16                              = 0x10D3
+    | UNORM_SHORT_565                          = 0x10D4
+    | UNORM_SHORT_555                          = 0x10D5
+    | UNORM_INT_101010                         = 0x10D6
+    | SIGNED_INT8                              = 0x10D7
+    | SIGNED_INT16                             = 0x10D8
+    | SIGNED_INT32                             = 0x10D9
+    | UNSIGNED_INT8                            = 0x10DA
+    | UNSIGNED_INT16                           = 0x10DB
+    | UNSIGNED_INT32                           = 0x10DC
+    | HALF_FLOAT                               = 0x10DD
+    | FLOAT                                    = 0x10DE
+    | UNORM_INT24                              = 0x10DF
+    | UNORM_INT_101010_2                       = 0x10E0
+    
+type MemObjectType =
+    | BUFFER                        = 0x10F0
+    | IMAGE2D                       = 0x10F1
+    | IMAGE3D                       = 0x10F2
+    | IMAGE2D_ARRAY                 = 0x10F3
+    | IMAGE1D                       = 0x10F4
+    | IMAGE1D_ARRAY                 = 0x10F5
+    | IMAGE1D_BUFFER                = 0x10F6
+    | PIPE                          = 0x10F7
+    
+type MemInfo =
+    | TYPE                                 = 0x1100
+    | FLAGS                                = 0x1101
+    | SIZE                                 = 0x1102
+    | HOST_PTR                             = 0x1103
+    | MAP_COUNT                            = 0x1104
+    | REFERENCE_COUNT                      = 0x1105
+    | CONTEXT                              = 0x1106
+    | ASSOCIATED_MEMOBJECT                 = 0x1107
+    | OFFSET                               = 0x1108
+    | USES_SVM_POINTER                     = 0x1109
+    
+type ImageInfo =
+    | FORMAT                             = 0x1110
+    | ELEMENT_SIZE                       = 0x1111
+    | ROW_PITCH                          = 0x1112
+    | SLICE_PITCH                        = 0x1113
+    | WIDTH                              = 0x1114
+    | HEIGHT                             = 0x1115
+    | DEPTH                              = 0x1116
+    | ARRAY_SIZE                         = 0x1117
+    | BUFFER                             = 0x1118
+    | NUM_MIP_LEVELS                     = 0x1119
+    | NUM_SAMPLES                        = 0x111A
+    
+type PipeInfo =
+    | PACKET_SIZE                         = 0x1120
+    | MAX_PACKETS                         = 0x1121
+    
+type AddressingMode =
+    | NONE                             = 0x1130
+    | CLAMP_TO_EDGE                    = 0x1131
+    | CLAMP                            = 0x1132
+    | REPEAT                           = 0x1133
+    | MIRRORED_REPEAT                  = 0x1134
+    
+type FilterMode =
+    | NEAREST                           = 0x1140
+    | LINEAR                            = 0x1141
+    
+type SamplerInfo =
+    | REFERENCE_COUNT                  = 0x1150
+    | CONTEXT                          = 0x1151
+    | NORMALIZED_COORDS                = 0x1152
+    | ADDRESSING_MODE                  = 0x1153
+    | FILTER_MODE                      = 0x1154
+    | MIP_FILTER_MODE                  = 0x1155
+    | LOD_MIN                          = 0x1156
+    | LOD_MAX                          = 0x1157
+    
+type MapFlags =
+    | READ                                 = 1
+    | WRITE                                = 2
+    | WRITE_INVALIDATE_REGION              = 4
+    
+type ProgramInfo =
+    | PROGRAM_REFERENCE_COUNT                  = 0x1160
+    | PROGRAM_CONTEXT                          = 0x1161
+    | PROGRAM_NUM_DEVICES                      = 0x1162
+    | PROGRAM_DEVICES                          = 0x1163
+    | PROGRAM_SOURCE                           = 0x1164
+    | PROGRAM_BINARY_SIZES                     = 0x1165
+    | PROGRAM_BINARIES                         = 0x1166
+    | PROGRAM_NUM_KERNELS                      = 0x1167
+    | PROGRAM_KERNEL_NAMES                     = 0x1168
+    | PROGRAM_IL                               = 0x1169
+    
+type ProgramBuildInfo =
+    | STATUS                     = 0x1181
+    | OPTIONS                    = 0x1182
+    | LOG                        = 0x1183
+    | PROGRAM_BINARY_TYPE        = 0x1184
+    | GLOBAL_VARIABLE_TOTAL_SIZE = 0x1185
+    
+type ProgramBinaryType =
+    | PROGRAM_BINARY_TYPE_NONE                 = 0x0
+    | PROGRAM_BINARY_TYPE_COMPILED_OBJECT      = 0x1
+    | PROGRAM_BINARY_TYPE_LIBRARY              = 0x2
+    | PROGRAM_BINARY_TYPE_EXECUTABLE           = 0x4
+
+type BuildStatus =
+    | SUCCESS                            =  0
+    | NONE                               = -1
+    | ERROR                              = -2
+    | IN_PROGRESS                        = -3 
+    
+type KernelInfo =
+    | FUNCTION_NAME                     = 0x1190
+    | NUM_ARGS                          = 0x1191
+    | REFERENCE_COUNT                   = 0x1192
+    | CONTEXT                           = 0x1193
+    | PROGRAM                           = 0x1194
+    | ATTRIBUTES                        = 0x1195
+    | MAX_NUM_SUB_GROUPS                = 0x11B9
+    | COMPILE_NUM_SUB_GROUPS            = 0x11BA
+    
+type KernelArgInfo = 
+    | ADDRESS_QUALIFIER             = 0x1196
+    | ACCESS_QUALIFIER              = 0x1197
+    | TYPE_NAME                     = 0x1198
+    | TYPE_QUALIFIER                = 0x1199
+    | NAME                          = 0x119A
+    
+type KernelArgAddress = 
+    | GLOBAL                = 0x119B
+    | LOCAL                 = 0x119C
+    | CONSTANT              = 0x119D
+    | PRIVATE               = 0x119E
+    
+type KernelArgAccess = 
+    | READ_ONLY              = 0x11A0
+    | WRITE_ONLY             = 0x11A1
+    | READ_WRITE             = 0x11A2
+    | NONE                   = 0x11A3
+    
+type KernelArgType = 
+    | NONE                     = 0
+    | CONST                    = 1
+    | RESTRICT                 = 2
+    | VOLATILE                 = 4
+    | PIPE                     = 8
+    
+type KernelWorkGroupInfo = 
+    | WORK_GROUP_SIZE                   = 0x11B0
+    | COMPILE_WORK_GROUP_SIZE           = 0x11B1
+    | LOCAL_MEM_SIZE                    = 0x11B2
+    | PREFERRED_WORK_GROUP_SIZE_MULTIPLE = 0x11B3
+    | PRIVATE_MEM_SIZE                  = 0x11B4
+    | GLOBAL_WORK_SIZE                  = 0x11B5
+    
+type KernelSubGroupInfo =
+    | MAX_SUB_GROUP_SIZE_FOR_NDRANGE    = 0x2033
+    | SUB_GROUP_COUNT_FOR_NDRANGE       = 0x2034
+    | LOCAL_SIZE_FOR_SUB_GROUP_COUNT    = 0x11B8
+    
+type KernelExecInfo =
+    | SVM_PTRS                = 0x11B6
+    | SVM_FINE_GRAIN_SYSTEM   = 0x11B7
+
+type EventInfo = 
+    | COMMAND_QUEUE                      = 0x11D0
+    | COMMAND_TYPE                       = 0x11D1
+    | REFERENCE_COUNT                    = 0x11D2
+    | COMMAND_EXECUTION_STATUS           = 0x11D3
+    | CONTEXT                            = 0x11D4
+    
+type Command = 
+    | NDRANGE_KERNEL                   = 0x11F0
+    | TASK                             = 0x11F1
+    | NATIVE_KERNEL                    = 0x11F2
+    | READ_BUFFER                      = 0x11F3
+    | WRITE_BUFFER                     = 0x11F4
+    | COPY_BUFFER                      = 0x11F5
+    | READ_IMAGE                       = 0x11F6
+    | WRITE_IMAGE                      = 0x11F7
+    | COPY_IMAGE                       = 0x11F8
+    | COPY_IMAGE_TO_BUFFER             = 0x11F9
+    | COPY_BUFFER_TO_IMAGE             = 0x11FA
+    | MAP_BUFFER                       = 0x11FB
+    | MAP_IMAGE                        = 0x11FC
+    | UNMAP_MEM_OBJECT                 = 0x11FD
+    | MARKER                           = 0x11FE
+    | ACQUIRE_GL_OBJECTS               = 0x11FF
+    | RELEASE_GL_OBJECTS               = 0x1200
+    | READ_BUFFER_RECT                 = 0x1201
+    | WRITE_BUFFER_RECT                = 0x1202
+    | COPY_BUFFER_RECT                 = 0x1203
+    | USER                             = 0x1204
+    | BARRIER                          = 0x1205
+    | MIGRATE_MEM_OBJECTS              = 0x1206
+    | FILL_BUFFER                      = 0x1207
+    | FILL_IMAGE                       = 0x1208
+    | SVM_FREE                         = 0x1209
+    | SVM_MEMCPY                       = 0x120A
+    | SVM_MEMFILL                      = 0x120B
+    | SVM_MAP                          = 0x120C
+    | SVM_UNMAP                        = 0x120D
+    
+type CommandState = 
+    | COMPLETE                                 = 0x0
+    | RUNNING                                  = 0x1
+    | SUBMITTED                                = 0x2
+    | QUEUED                                   = 0x3
+    
+type BufferCreateType = 
+    | REGION                = 0x1220
+    
+type ProfilingInfo = 
+    | QUEUED                 = 0x1280
+    | SUBMIT                 = 0x1281
+    | START                  = 0x1282
+    | END                    = 0x1283
+    | COMPLETE               = 0x1284
