@@ -1,7 +1,7 @@
 ﻿namespace OpenCL
 
 
-type Success =
+type ResultValue =
     | SUCCESS = 0
     | DEVICE_NOT_FOUND = -1
     | DEVICE_NOT_AVAILABLE  = -2
